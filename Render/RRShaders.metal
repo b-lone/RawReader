@@ -11,7 +11,7 @@ Metal shaders used for this sample
 using namespace metal;
 
 // Include header shared between this Metal shader code and C code executing Metal API commands
-#include "AAPLShaderTypes.h"
+#include "RRShaderTypes.h"
 
 // Vertex shader outputs and per-fragment inputs
 struct RasterizerData
@@ -23,8 +23,8 @@ struct RasterizerData
 
 vertex RasterizerData
 vertexShader(uint vertexID [[ vertex_id ]],
-             constant AAPLVertex *vertexArray [[ buffer(AAPLVertexInputIndexVertices) ]],
-             constant AAPLUniforms &uniforms  [[ buffer(AAPLVertexInputIndexUniforms) ]])
+             constant RRVertex *vertexArray [[ buffer(RRVertexInputIndexVertices) ]],
+             constant RRUniforms &uniforms  [[ buffer(RRVertexInputIndexUniforms) ]])
 
 {
     RasterizerData out;
@@ -43,12 +43,31 @@ vertexShader(uint vertexID [[ vertex_id ]],
 }
 
 fragment half4
-fragmentShader(RasterizerData in [[stage_in]],
-               texture2d<half> colorTexture [[ texture(AAPLTextureIndexBaseColor) ]])
+grayFragmentShader(RasterizerData in [[stage_in]],
+               texture2d<half> colorTexture [[ texture(RRTextureIndexBaseColor) ]])
 {
     constexpr sampler textureSampler (mag_filter::linear,
                                       min_filter::linear);
     const half4 colorSample = colorTexture.sample(textureSampler, in.textureCoordinate);
     return half4(half3(colorSample.r), 1.);
+}
+
+fragment half4
+bgraFragmentShader(RasterizerData in [[stage_in]],
+               texture2d<half> colorTexture [[ texture(RRTextureIndexBaseColor) ]])
+{
+    constexpr sampler textureSampler (mag_filter::linear,
+                                      min_filter::linear);
+    const half4 colorSample = colorTexture.sample(textureSampler, in.textureCoordinate);
+    return half4(colorSample.b, colorSample.g, colorSample.r, colorSample.a);
+}
+
+fragment half4
+rgbaFragmentShader(RasterizerData in [[stage_in]],
+               texture2d<half> colorTexture [[ texture(RRTextureIndexBaseColor) ]])
+{
+    constexpr sampler textureSampler (mag_filter::linear,
+                                      min_filter::linear);
+    return colorTexture.sample(textureSampler, in.textureCoordinate);
 }
 

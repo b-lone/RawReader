@@ -4,14 +4,10 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implementation of renderer class which performs Metal setup and per-frame rendering
 */
-#import "AAPLRenderer.h"
-#import "AAPLShaderTypes.h"
-#import "AAPLConfig.h"
+#import "RRRenderer.h"
+#import "RRShaderTypes.h"
 
-static const int imageWidth = 320;
-static const int imageHeight = 180;
-
-@implementation AAPLRenderer
+@implementation RRRenderer
 {
     // renderer global ivars
     id <MTLDevice>              _device;
@@ -23,15 +19,19 @@ static const int imageHeight = 180;
     // Render pass descriptor which creates a render command encoder to draw to the drawable
     // textures
     MTLRenderPassDescriptor *_drawableRenderDescriptor;
+    
+    RawImage* _image;
 }
 
 - (nonnull instancetype)initWithMetalDevice:(nonnull id<MTLDevice>)device
                         drawablePixelFormat:(MTLPixelFormat)drawabklePixelFormat
+                                      image:(RawImage* _Nonnull)image
 {
     self = [super init];
     if (self)
     {
         _device = device;
+        _image = image;
 
         _commandQueue = [_device newCommandQueue];
 
@@ -56,17 +56,17 @@ static const int imageHeight = 180;
                 return nil;
             }
 
-            id <MTLFunction> fragmentProgram = [shaderLib newFunctionWithName:@"fragmentShader"];
+            id <MTLFunction> fragmentProgram = [shaderLib newFunctionWithName:[self getFragmentShaderName]];
             if(!fragmentProgram)
             {
                 NSLog(@" ERROR: Couldn't load fragment function from default library");
                 return nil;
             }
             
-            [self loadTexture:@"0" withExtension:@"raw"];
+            [self loadTexture:_image.url];
 
             // Set up a simple MTLBuffer with the vertices, including position and texture coordinates
-            static const AAPLVertex quadVertices[] =
+            static const RRVertex quadVertices[] =
             {
                 // Pixel positions, Color coordinates
                 { {  1.f, -1.f },  { 1.f, 0.f, 0.f }, { 1.f, 1.f } },
@@ -129,18 +129,18 @@ static const int imageHeight = 180;
 
     [renderEncoder setVertexBuffer:_vertices
                             offset:0
-                           atIndex:AAPLVertexInputIndexVertices ];
+                           atIndex:RRVertexInputIndexVertices ];
 
     {
-        AAPLUniforms uniforms;
+        RRUniforms uniforms;
 
         [renderEncoder setVertexBytes:&uniforms
                                length:sizeof(uniforms)
-                              atIndex:AAPLVertexInputIndexUniforms ];
+                              atIndex:RRVertexInputIndexUniforms ];
     }
     
     [renderEncoder setFragmentTexture:_texture
-                              atIndex:AAPLTextureIndexBaseColor];
+                              atIndex:RRTextureIndexBaseColor];
 
     [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6];
 
@@ -151,9 +151,7 @@ static const int imageHeight = 180;
     [commandBuffer commit];
 }
 
-- (void)loadTexture:(NSString *)fileName withExtension:(NSString *) extension {
-    NSURL* url = [[NSBundle mainBundle] URLForResource:fileName withExtension:extension];
-    
+- (void)loadTexture:(NSURL*) url {
     NSError * error;
     NSData* fileData = [[NSData alloc] initWithContentsOfURL:url options:0x0 error:&error];
     
@@ -164,21 +162,39 @@ static const int imageHeight = 180;
     }
     
     MTLTextureDescriptor *textureDescriptor = [[MTLTextureDescriptor alloc] init];
-    textureDescriptor.pixelFormat = MTLPixelFormatR8Unorm;
+    textureDescriptor.pixelFormat = MTLPixelFormatR8Unorm;//[_image pixelFormat];
     
-    textureDescriptor.width = imageWidth;
-    textureDescriptor.height = imageHeight;
+    textureDescriptor.width = _image.width;
+    textureDescriptor.height = _image.height;
     
     _texture = [_device newTextureWithDescriptor:textureDescriptor];
-    NSUInteger bytesPerRow = imageWidth;
+    NSUInteger bytesPerRow = _image.width;
     MTLRegion region = {
         { 0, 0, 0 },                 // MTLOrigin
-        {imageWidth, imageHeight, 1} // MTLSize
+        {_image.width, _image.height, 1} // MTLSize
     };
     [_texture replaceRegion:region
                 mipmapLevel:0
                   withBytes:fileData.bytes
                 bytesPerRow:bytesPerRow];
+}
+
+- (NSString *)getFragmentShaderName {
+    switch ([_image pixelFormat]) {
+        case MTLPixelFormatR8Unorm:
+            return @"grayFragmentShader";
+            break;
+        case MTLPixelFormatBGRA8Unorm:
+            return @"bgraFragmentShader";
+            break;
+        case MTLPixelFormatRGBA8Unorm:
+            return @"rgbaFragmentShader";
+            break;
+            
+        default:
+            break;
+    }
+    return @"";
 }
 
 @end

@@ -5,21 +5,21 @@ Abstract:
 Header containing types and enum constants shared between Metal shaders and C/ObjC source
 */
 
-#ifndef AAPLShaderTypes_h
-#define AAPLShaderTypes_h
+#ifndef RRShaderTypes_h
+#define RRShaderTypes_h
 
 #include <simd/simd.h>
 
-typedef enum AAPLVertexInputIndex
+typedef enum RRVertexInputIndex
 {
-    AAPLVertexInputIndexVertices = 0,
-    AAPLVertexInputIndexUniforms = 1,
-} AAPLVertexInputIndex;
+    RRVertexInputIndexVertices = 0,
+    RRVertexInputIndexUniforms = 1,
+} RRVertexInputIndex;
 
-typedef enum AAPLTextureIndex
+typedef enum RRTextureIndex
 {
-    AAPLTextureIndexBaseColor = 0,
-} AAPLTextureIndex;
+    RRTextureIndexBaseColor = 0,
+} RRTextureIndex;
 
 typedef struct
 {
@@ -29,12 +29,12 @@ typedef struct
     // 2D texture coordinate
     vector_float3 color;
     vector_float2 textureCoordinate;
-} AAPLVertex;
+} RRVertex;
 
 typedef struct
 {
     float scale;
     vector_uint2 viewportSize;
-} AAPLUniforms;
+} RRUniforms;
 
-#endif /* AAPLShaderTypes_h */
+#endif /* RRShaderTypes_h */

@@ -1,5 +1,5 @@
 //
-//  MyMetalView.swift
+//  PreviewView.swift
 //  RawReader
 //
 //  Created by Archie on 2022/2/14.
@@ -8,13 +8,13 @@
 import Cocoa
 import MetalKit
 
-protocol MyMetalViewDelegate: AnyObject {
+protocol PreviewViewDelegate: AnyObject {
     func renderToMetalLayer(_ layer: CAMetalLayer)
 }
 
-class MyMetalView: NSView & CALayerDelegate {
+class PreviewView: NSView & CALayerDelegate {
     var metalLayer: CAMetalLayer { self.layer as! CAMetalLayer }
-    weak var delegate: MyMetalViewDelegate?
+    weak var delegate: PreviewViewDelegate?
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
