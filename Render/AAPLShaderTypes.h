@@ -16,6 +16,11 @@ typedef enum AAPLVertexInputIndex
     AAPLVertexInputIndexUniforms = 1,
 } AAPLVertexInputIndex;
 
+typedef enum AAPLTextureIndex
+{
+    AAPLTextureIndexBaseColor = 0,
+} AAPLTextureIndex;
+
 typedef struct
 {
     // Positions in pixel space (i.e. a value of 100 indicates 100 pixels from the origin/center)
@@ -23,6 +28,7 @@ typedef struct
 
     // 2D texture coordinate
     vector_float3 color;
+    vector_float2 textureCoordinate;
 } AAPLVertex;
 
 typedef struct

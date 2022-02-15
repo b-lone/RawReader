@@ -22,14 +22,8 @@ class ViewController: NSViewController & MyMetalViewDelegate {
         }
     }
 
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-    
     func renderToMetalLayer(_ layer: CAMetalLayer) {
-        renderer.render(to: layer)
+        renderer?.render(to: layer)
     }
 }
 

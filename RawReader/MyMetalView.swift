@@ -51,7 +51,6 @@ class MyMetalView: NSView & CALayerDelegate {
         delegate?.renderToMetalLayer(metalLayer)
     }
     
-    
     override func makeBackingLayer() -> CALayer {
         CAMetalLayer()
     }

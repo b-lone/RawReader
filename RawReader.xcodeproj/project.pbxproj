@@ -14,6 +14,7 @@
 		2ED06D9027BA42EC00FBF569 /* MyMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED06D8F27BA42EC00FBF569 /* MyMetalView.swift */; };
 		2ED06D9627BA478000FBF569 /* AAPLShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2ED06D9227BA478000FBF569 /* AAPLShaders.metal */; };
 		2ED06D9727BA478000FBF569 /* AAPLRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED06D9427BA478000FBF569 /* AAPLRenderer.m */; };
+		2ED06D9E27BB96D300FBF569 /* 0.raw in Resources */ = {isa = PBXBuildFile; fileRef = 2ED06D9D27BB96D300FBF569 /* 0.raw */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		2ED06D9427BA478000FBF569 /* AAPLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLRenderer.m; sourceTree = "<group>"; };
 		2ED06D9527BA478000FBF569 /* AAPLShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLShaderTypes.h; sourceTree = "<group>"; };
 		2ED06D9827BA4D4400FBF569 /* AAPLConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AAPLConfig.h; sourceTree = "<group>"; };
+		2ED06D9D27BB96D300FBF569 /* 0.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = 0.raw; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +49,7 @@
 		2E7F98F727B537F3005EAC11 = {
 			isa = PBXGroup;
 			children = (
+				2ED06D9F27BB96DB00FBF569 /* Resource */,
 				2ED06D9127BA476F00FBF569 /* Render */,
 				2E7F990227B537F3005EAC11 /* RawReader */,
 				2E7F990127B537F3005EAC11 /* Products */,
@@ -94,6 +97,14 @@
 				2ED06D9527BA478000FBF569 /* AAPLShaderTypes.h */,
 			);
 			path = Render;
+			sourceTree = "<group>";
+		};
+		2ED06D9F27BB96DB00FBF569 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				2ED06D9D27BB96D300FBF569 /* 0.raw */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,6 +166,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2ED06D9E27BB96D300FBF569 /* 0.raw in Resources */,
 				2E7F990827B537F4005EAC11 /* Assets.xcassets in Resources */,
 				2E7F990B27B537F4005EAC11 /* Main.storyboard in Resources */,
 			);

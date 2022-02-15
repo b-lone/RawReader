@@ -18,6 +18,7 @@ struct RasterizerData
 {
     float4 clipSpacePosition [[position]];
     float3 color;
+    float2 textureCoordinate;
 };
 
 vertex RasterizerData
@@ -35,13 +36,19 @@ vertexShader(uint vertexID [[ vertex_id ]],
     out.clipSpacePosition.w = 1.0;
 
     out.color = vertexArray[vertexID].color;
+    
+    out.textureCoordinate = vertexArray[vertexID].textureCoordinate;
 
     return out;
 }
 
-fragment float4
-fragmentShader(RasterizerData in [[stage_in]])
+fragment half4
+fragmentShader(RasterizerData in [[stage_in]],
+               texture2d<half> colorTexture [[ texture(AAPLTextureIndexBaseColor) ]])
 {
-    return float4(in.color, 1.0);
+    constexpr sampler textureSampler (mag_filter::linear,
+                                      min_filter::linear);
+    const half4 colorSample = colorTexture.sample(textureSampler, in.textureCoordinate);
+    return half4(half3(colorSample.r), 1.);
 }
 

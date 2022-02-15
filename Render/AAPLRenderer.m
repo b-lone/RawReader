@@ -8,6 +8,9 @@ Implementation of renderer class which performs Metal setup and per-frame render
 #import "AAPLShaderTypes.h"
 #import "AAPLConfig.h"
 
+static const int imageWidth = 320;
+static const int imageHeight = 180;
+
 @implementation AAPLRenderer
 {
     // renderer global ivars
@@ -15,7 +18,7 @@ Implementation of renderer class which performs Metal setup and per-frame render
     id <MTLCommandQueue>        _commandQueue;
     id <MTLRenderPipelineState> _pipelineState;
     id <MTLBuffer>              _vertices;
-    id <MTLTexture>             _depthTarget;
+    id <MTLTexture>             _texture;
 
     // Render pass descriptor which creates a render command encoder to draw to the drawable
     // textures
@@ -35,7 +38,7 @@ Implementation of renderer class which performs Metal setup and per-frame render
         _drawableRenderDescriptor = [MTLRenderPassDescriptor new];
         _drawableRenderDescriptor.colorAttachments[0].loadAction = MTLLoadActionClear;
         _drawableRenderDescriptor.colorAttachments[0].storeAction = MTLStoreActionStore;
-        _drawableRenderDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 1, 1, 1);
+        _drawableRenderDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
 
         {
             id<MTLLibrary> shaderLib = [_device newDefaultLibrary];
@@ -59,18 +62,20 @@ Implementation of renderer class which performs Metal setup and per-frame render
                 NSLog(@" ERROR: Couldn't load fragment function from default library");
                 return nil;
             }
+            
+            [self loadTexture:@"0" withExtension:@"raw"];
 
             // Set up a simple MTLBuffer with the vertices, including position and texture coordinates
             static const AAPLVertex quadVertices[] =
             {
                 // Pixel positions, Color coordinates
-                { {  1.f,  -1.f },  { 1.f, 0.f, 0.f } },
-                { { -1.f,  -1.f },  { 0.f, 1.f, 0.f } },
-                { { -1.f,   1.f },  { 0.f, 0.f, 1.f } },
+                { {  1.f, -1.f },  { 1.f, 0.f, 0.f }, { 1.f, 1.f } },
+                { { -1.f, -1.f },  { 0.f, 1.f, 0.f }, { 0.f, 1.f } },
+                { { -1.f,  1.f },  { 0.f, 0.f, 1.f }, { 0.f, 0.f } },
 
-                { {  1.f,  -1.f },  { 1.f, 0.f, 0.f } },
-                { { -1.f,   1.f },  { 0.f, 0.f, 1.f } },
-                { {  1.f,   1.f },  { 1.f, 0.f, 1.f } },
+                { {  1.f, -1.f },  { 1.f, 0.f, 0.f }, { 1.f, 1.f } },
+                { { -1.f,  1.f },  { 0.f, 0.f, 1.f }, { 0.f, 0.f } },
+                { {  1.f,  1.f },  { 1.f, 0.f, 1.f }, { 1.f, 0.f } },
             };
 
             // Create a vertex buffer, and initialize it with the vertex data.
@@ -133,6 +138,9 @@ Implementation of renderer class which performs Metal setup and per-frame render
                                length:sizeof(uniforms)
                               atIndex:AAPLVertexInputIndexUniforms ];
     }
+    
+    [renderEncoder setFragmentTexture:_texture
+                              atIndex:AAPLTextureIndexBaseColor];
 
     [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:6];
 
@@ -141,6 +149,36 @@ Implementation of renderer class which performs Metal setup and per-frame render
     [commandBuffer presentDrawable:currentDrawable];
 
     [commandBuffer commit];
+}
+
+- (void)loadTexture:(NSString *)fileName withExtension:(NSString *) extension {
+    NSURL* url = [[NSBundle mainBundle] URLForResource:fileName withExtension:extension];
+    
+    NSError * error;
+    NSData* fileData = [[NSData alloc] initWithContentsOfURL:url options:0x0 error:&error];
+    
+    if (!fileData)
+    {
+        NSLog(@"Could not open File:%@", error.localizedDescription);
+        return;
+    }
+    
+    MTLTextureDescriptor *textureDescriptor = [[MTLTextureDescriptor alloc] init];
+    textureDescriptor.pixelFormat = MTLPixelFormatR8Unorm;
+    
+    textureDescriptor.width = imageWidth;
+    textureDescriptor.height = imageHeight;
+    
+    _texture = [_device newTextureWithDescriptor:textureDescriptor];
+    NSUInteger bytesPerRow = imageWidth;
+    MTLRegion region = {
+        { 0, 0, 0 },                 // MTLOrigin
+        {imageWidth, imageHeight, 1} // MTLSize
+    };
+    [_texture replaceRegion:region
+                mipmapLevel:0
+                  withBytes:fileData.bytes
+                bytesPerRow:bytesPerRow];
 }
 
 @end
