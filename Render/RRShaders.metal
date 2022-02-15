@@ -17,7 +17,6 @@ using namespace metal;
 struct RasterizerData
 {
     float4 clipSpacePosition [[position]];
-    float3 color;
     float2 textureCoordinate;
 };
 
@@ -34,8 +33,6 @@ vertexShader(uint vertexID [[ vertex_id ]],
     out.clipSpacePosition.xy = pixelSpacePosition;
     out.clipSpacePosition.z = 0.0;
     out.clipSpacePosition.w = 1.0;
-
-    out.color = vertexArray[vertexID].color;
     
     out.textureCoordinate = vertexArray[vertexID].textureCoordinate;
 

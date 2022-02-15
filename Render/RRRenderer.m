@@ -6,6 +6,7 @@ Implementation of renderer class which performs Metal setup and per-frame render
 */
 #import "RRRenderer.h"
 #import "RRShaderTypes.h"
+#import "RawReader-Swift.h"
 
 @implementation RRRenderer
 {
@@ -69,13 +70,13 @@ Implementation of renderer class which performs Metal setup and per-frame render
             static const RRVertex quadVertices[] =
             {
                 // Pixel positions, Color coordinates
-                { {  1.f, -1.f },  { 1.f, 0.f, 0.f }, { 1.f, 1.f } },
-                { { -1.f, -1.f },  { 0.f, 1.f, 0.f }, { 0.f, 1.f } },
-                { { -1.f,  1.f },  { 0.f, 0.f, 1.f }, { 0.f, 0.f } },
+                { {  1.f, -1.f },  { 1.f, 1.f } },
+                { { -1.f, -1.f },  { 0.f, 1.f } },
+                { { -1.f,  1.f },  { 0.f, 0.f } },
 
-                { {  1.f, -1.f },  { 1.f, 0.f, 0.f }, { 1.f, 1.f } },
-                { { -1.f,  1.f },  { 0.f, 0.f, 1.f }, { 0.f, 0.f } },
-                { {  1.f,  1.f },  { 1.f, 0.f, 1.f }, { 1.f, 0.f } },
+                { {  1.f, -1.f },  { 1.f, 1.f } },
+                { { -1.f,  1.f },  { 0.f, 0.f } },
+                { {  1.f,  1.f },  { 1.f, 0.f } },
             };
 
             // Create a vertex buffer, and initialize it with the vertex data.
@@ -162,7 +163,7 @@ Implementation of renderer class which performs Metal setup and per-frame render
     }
     
     MTLTextureDescriptor *textureDescriptor = [[MTLTextureDescriptor alloc] init];
-    textureDescriptor.pixelFormat = MTLPixelFormatR8Unorm;//[_image pixelFormat];
+    textureDescriptor.pixelFormat = [_image pixelFormat];
     
     textureDescriptor.width = _image.width;
     textureDescriptor.height = _image.height;

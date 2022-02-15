@@ -7,22 +7,8 @@ Metal Renderer for Metal View. Acts as the update and render delegate for the vi
 
 #import <Metal/Metal.h>
 #import <QuartzCore/CAMetalLayer.h>
-#import "RawReader-Swift.h"
 
-//typedef enum
-//{
-//    RawImageFormatGray = 0,
-//    RawImageFormatBGRA = 1,
-//    RawImageFormatRGBA = 1,
-//} RRRawImageFormat;
-//
-//typedef struct
-//{
-//    int width;
-//    int height;
-//    RRRawImageFormat format;
-//    NSURL* _Nonnull url;
-//} RRRawImage;
+@class RawImage;
 
 @interface RRRenderer : NSObject
 

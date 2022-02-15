@@ -27,7 +27,6 @@ typedef struct
     vector_float2 position;
 
     // 2D texture coordinate
-    vector_float3 color;
     vector_float2 textureCoordinate;
 } RRVertex;
 
