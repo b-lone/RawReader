@@ -27,6 +27,8 @@ class ImagePreviewWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
         
+        window?.backgroundColor = .clear
+        window?.setContentSize(NSSize(width: image.width, height: image.height))
         previewView.delegate = self
         
         if let device = MTLCreateSystemDefaultDevice() {

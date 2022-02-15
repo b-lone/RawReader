@@ -39,7 +39,7 @@ Implementation of renderer class which performs Metal setup and per-frame render
         _drawableRenderDescriptor = [MTLRenderPassDescriptor new];
         _drawableRenderDescriptor.colorAttachments[0].loadAction = MTLLoadActionClear;
         _drawableRenderDescriptor.colorAttachments[0].storeAction = MTLStoreActionStore;
-        _drawableRenderDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1);
+        _drawableRenderDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(255, 255, 255, 1);
 
         {
             id<MTLLibrary> shaderLib = [_device newDefaultLibrary];

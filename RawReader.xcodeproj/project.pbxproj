@@ -12,7 +12,6 @@
 		2ED06D9027BA42EC00FBF569 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED06D8F27BA42EC00FBF569 /* PreviewView.swift */; };
 		2ED06D9627BA478000FBF569 /* RRShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2ED06D9227BA478000FBF569 /* RRShaders.metal */; };
 		2ED06D9727BA478000FBF569 /* RRRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED06D9427BA478000FBF569 /* RRRenderer.m */; };
-		2ED06D9E27BB96D300FBF569 /* 0.raw in Resources */ = {isa = PBXBuildFile; fileRef = 2ED06D9D27BB96D300FBF569 /* 0.raw */; };
 		2ED06DA327BBACF500FBF569 /* RawImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED06DA227BBACF500FBF569 /* RawImage.swift */; };
 		2ED06DA527BBAE5800FBF569 /* OpenDocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED06DA427BBAE5800FBF569 /* OpenDocumentWindowController.swift */; };
 		2ED06DA727BBB2D600FBF569 /* OpenDocumentWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ED06DA627BBB2D600FBF569 /* OpenDocumentWindowController.xib */; };
@@ -34,7 +33,6 @@
 		2ED06D9327BA478000FBF569 /* RRRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRRenderer.h; sourceTree = "<group>"; };
 		2ED06D9427BA478000FBF569 /* RRRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRRenderer.m; sourceTree = "<group>"; };
 		2ED06D9527BA478000FBF569 /* RRShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRShaderTypes.h; sourceTree = "<group>"; };
-		2ED06D9D27BB96D300FBF569 /* 0.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = 0.raw; sourceTree = "<group>"; };
 		2ED06DA227BBACF500FBF569 /* RawImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawImage.swift; sourceTree = "<group>"; };
 		2ED06DA427BBAE5800FBF569 /* OpenDocumentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDocumentWindowController.swift; sourceTree = "<group>"; };
 		2ED06DA627BBB2D600FBF569 /* OpenDocumentWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OpenDocumentWindowController.xib; sourceTree = "<group>"; };
@@ -58,11 +56,11 @@
 		2E7F98F727B537F3005EAC11 = {
 			isa = PBXGroup;
 			children = (
-				2ED06D9F27BB96DB00FBF569 /* Resource */,
-				2ED06D9127BA476F00FBF569 /* Render */,
-				2E7F990227B537F3005EAC11 /* RawReader */,
-				2E7F990127B537F3005EAC11 /* Products */,
 				2E7F991827B5391B005EAC11 /* Frameworks */,
+				2E7F990127B537F3005EAC11 /* Products */,
+				2E7F990227B537F3005EAC11 /* RawReader */,
+				2ED06D9127BA476F00FBF569 /* Render */,
+				2ED06D9F27BB96DB00FBF569 /* Resource */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,7 +104,7 @@
 		2ED06D9F27BB96DB00FBF569 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				2ED06D9D27BB96D300FBF569 /* 0.raw */,
+				2E7F990727B537F4005EAC11 /* Assets.xcassets */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -136,7 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				2E7F990327B537F3005EAC11 /* AppDelegate.swift */,
-				2E7F990727B537F4005EAC11 /* Assets.xcassets */,
 				2ED06DCC27BBCC6200FBF569 /* MainMenu.xib */,
 				2E7F991427B53897005EAC11 /* RawReader-Bridging-Header.h */,
 				2E7F990C27B537F4005EAC11 /* RawReader.entitlements */,
@@ -204,7 +201,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2ED06DA727BBB2D600FBF569 /* OpenDocumentWindowController.xib in Resources */,
-				2ED06D9E27BB96D300FBF569 /* 0.raw in Resources */,
 				2E7F990827B537F4005EAC11 /* Assets.xcassets in Resources */,
 				2ED06DAD27BBBB8800FBF569 /* ImagePreviewWindowController.xib in Resources */,
 				2ED06DCD27BBCC6200FBF569 /* MainMenu.xib in Resources */,
